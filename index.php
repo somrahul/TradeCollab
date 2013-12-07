@@ -107,20 +107,40 @@ try {
   </head>
   <body>
     <div class="container">
-      <div class="navbar">
-		  <div class="navbar-inner">
-		    <div class="container">
-		      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
-		      <a href="#" class="navbar-brand">CoTr</a>
-		        <form class="navbar-search pull-right" action="?login" method="post">
-		            <div class="input-group input-group-sm">
-		                 <button class="btn btn-embossed btn-primary">Login using Google</button>
-		          	</div>
-		        </form>
-		    </div>
-		  </div>
-		</div>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
+        <a href="#" class="navbar-brand">CoTr</a>
+          <form class="navbar-search pull-right" action="">
+              <div class="input-group input-group-sm">
+                  <button class="btn btn-embossed btn-primary">
+                    Login using Google
+                  </button>
+             
+              </div>
+          </form>
+      </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="container">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-6">
+    <div class="abtcotr">
+      <div class="cotrimg">
+      <img src="http://placehold.it/200x200">
+      </div>
+      <div id="cotrdesc">
+        Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.
+      </div>
+    </div>
+    <div>
+  </div>
+  </div>  
+
+</div>
     <!-- /.container -->
 
 
