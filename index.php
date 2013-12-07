@@ -50,16 +50,30 @@ try {
             $stmt->execute(array(
                 ':email' => $userEmail,
                 ':name' => $firstName));
+            $_SESSION['userEmail'] = 'You NEW Bitch';
             //header based on the new user
-        } else {
-            //the user is returning 
+        } else if ($row['member_name'] == null){
+            //the user is a collaborator
+            //insert the name and direct to the home page
+            $sql = "UPDATE {$p}members SET member_name = :name WHERE member_email = :email";
+            //echo $sql;
+            $stmt = $db->prepare($sql);
+            //$stmt->execute();
+            $stmt->execute(array(
+                ':name' => $firstName,
+                ':email' => $userEmail));
+            //take to the home
+            $_SESSION['userEmail'] = 'You Collab Bitch';
+        } else{
+        	//the user is returning / initiator 
             //load the page based on this
             //header based on the exisitng user
+            $_SESSION['userEmail'] = 'You Initiator Bitch';
         }
 
         
 
-        $_SESSION['userEmail'] = $userEmail;
+        
 
         header('Location: test.php');
     }
