@@ -1,0 +1,8 @@
+* {
+  		-webkit-border-radius: 0 !important;
+        -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+.navbar-inner{background-color: #490000;}
+
+.navbar .navbar-brand {color:#D9EBC2;}
