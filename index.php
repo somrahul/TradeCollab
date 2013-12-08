@@ -73,7 +73,7 @@ try {
 
         
 
-        
+        $_SESSION['loggedIn'] = $firstName;
 
         header('Location: test.php');
     }
