@@ -50,8 +50,14 @@ try {
             $stmt->execute(array(
                 ':email' => $userEmail,
                 ':name' => $firstName));
-            $_SESSION['userEmail'] = 'You NEW Bitch';
+
             //header based on the new user
+            $_SESSION['loggedIn'] = $firstName;
+            $_SESSION['userEmail'] = $userEmail;
+            
+            header('Location: onboarding.php');
+            return; 
+
         } else if ($row['member_name'] == null){
             //the user is a collaborator
             //insert the name and direct to the home page
@@ -63,19 +69,19 @@ try {
                 ':name' => $firstName,
                 ':email' => $userEmail));
             //take to the home
-            $_SESSION['userEmail'] = 'You Collab Bitch';
+            //$_SESSION['userEmail'] = 'You Collab Bitch';
         } else{
         	//the user is returning / initiator 
             //load the page based on this
             //header based on the exisitng user
-            $_SESSION['userEmail'] = 'You Initiator Bitch';
+            //$_SESSION['userEmail'] = 'You Initiator Bitch';
         }
 
         
 
-        $_SESSION['loggedIn'] = $firstName;
+        //$_SESSION['loggedIn'] = $firstName;
 
-        header('Location: test.php');
+        //header('Location: test.php');
     }
 } catch(ErrorException $e) {
     echo $e->getMessage();
