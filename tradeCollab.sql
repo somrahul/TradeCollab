@@ -15,5 +15,6 @@ CREATE TABLE tradeCollab_team (
 	team_id MEDIUMINT NOT NULL AUTO_INCREMENT KEY,
 	team_name varchar(1024) NOT NULL
 	budget DOUBLE,
+	markets varchar(4096),
 
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;

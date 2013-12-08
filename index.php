@@ -112,7 +112,7 @@ try {
       <div class="container">
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
         <a href="#" class="navbar-brand">CoTr</a>
-          <form class="navbar-search pull-right" action="">
+          <form class="navbar-search pull-right" action="?login" method="post">
               <div class="input-group input-group-sm">
                   <button class="btn btn-embossed btn-primary">
                     Login using Google
