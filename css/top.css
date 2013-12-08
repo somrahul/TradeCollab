@@ -9,8 +9,8 @@ html, body {
 }
 .navbar-inner{background-color: #414042;}
 
-.navbar .navbar-brand {color:#C2B59B;}
-.navbar .navbar-brand:hover {color:#9B8579;}
+.navbar .navbar-brand {color:#ffffff;}
+.navbar .navbar-brand:hover {color:#ffffff;}
 
 .btn.btn-primary {
   background-color: #414042;
@@ -55,9 +55,12 @@ width:50%;}
 	margin-bottom: 5px;
 }
 
-.checkbox{margin-top: 0px;}
+.checkbox,.radio{margin-top: 0px;}
 
 #submit{text-align: center;}
 
 #heading{text-align: center;
 margin-bottom: -20px;}
+
+.navbar .nav > li > a
+{color:#5E5E5E;}
