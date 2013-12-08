@@ -123,8 +123,7 @@ try {
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="container">
+  <div class="container">
       <div class="col-md-3">
       </div>
       <div class="col-md-6">
@@ -136,10 +135,9 @@ try {
         Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.
       </div>
     </div>
-    <div>
-  </div>
-  </div>  
-
+    
+</div>
+</div>
 </div>
     <!-- /.container -->
 

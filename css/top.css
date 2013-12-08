@@ -38,3 +38,26 @@ body {background-color: #F5F7F2;}
 padding-right: 10px;
 margin-right: 10px;
 border-right:1px solid #1c344d;}
+
+.rightform{float:left;
+margin-left: 20px;
+width:50%;}
+
+
+.leftform{float:left;
+width:50%;}
+
+.row.row-form{
+	margin-bottom: 20px;
+}
+
+#addmbr{
+	margin-bottom: 5px;
+}
+
+.checkbox{margin-top: 0px;}
+
+#submit{text-align: center;}
+
+#heading{text-align: center;
+margin-bottom: -20px;}
