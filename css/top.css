@@ -64,3 +64,37 @@ margin-bottom: -20px;}
 
 .navbar .nav > li > a
 {color:#5E5E5E;}
+
+.nav-tabs > li.active > a{background-color:#F5F7F2;
+border-bottom-color: #F5F7F2; }
+
+.nav-tabs > li.active > a:hover{background-color:#F5F7F2;
+border-bottom-color: #F5F7F2; 
+color:#9B8579;}
+
+.nav-tabs > li > a:hover{
+color:#9B8579;}
+
+
+#tablehead{
+  border-bottom-width:2px;
+border-bottom-style: dotted;
+border-bottom-color: #414042;}
+
+#tabledata{
+  padding-bottom: 10px;
+  border-bottom-width:1px;
+  border-bottom-color: #000000;
+  border-bottom-style: dotted;
+  margin-top: 20px;
+  margin-bottom:20px;}
+
+#yes{color:green;}
+
+#no{color:red;}
+
+#decide_yes:hover{color:green; cursor: hand;}
+
+#decide_no:hover{color:red; cursor: hand;}
+
+

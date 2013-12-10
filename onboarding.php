@@ -7,6 +7,7 @@ session_start();
 if(!isset($_SESSION['loggedIn'])) {
 	echo "You are not logged in. Please follow the link";
 	echo("<a href='http://localhost:8888/tradeCollab/'>Log In</a>");
+	return;
 } else {
 	if(isset($_POST["teamName"])&&isset($_POST["memberCount"])&&isset($_POST["budget"])) {
 		//var_dump($_POST);
@@ -111,14 +112,14 @@ if(!isset($_SESSION['loggedIn'])) {
       <div class="container">
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
         <a href="#" class="navbar-brand">CoTr</a>
-          <form class="navbar-search pull-right" action="">
+          <div class="navbar-search pull-right">
               <div class="input-group input-group-sm">
                   <a href="logout.php"><button class="btn btn-embossed btn-primary">
                     Logout
                   </button></a>
              
               </div>
-          </form>
+          </div>
       </div>
     </div>
   </div>

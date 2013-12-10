@@ -75,6 +75,12 @@ try {
             //load the page based on this
             //header based on the exisitng user
             //$_SESSION['userEmail'] = 'You Initiator Bitch';
+            //print "HI Biatch!!"
+            $_SESSION['loggedIn'] = $firstName;
+            $_SESSION['userEmail'] = $userEmail;
+            
+            header('Location: home.php');
+            return; 
         }
 
         
