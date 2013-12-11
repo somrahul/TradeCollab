@@ -17,6 +17,7 @@ CREATE TABLE tradeCollab_team (
 	team_id MEDIUMINT NOT NULL AUTO_INCREMENT KEY,
 	team_name varchar(1024) NOT NULL
 	budget DOUBLE,
+	budget_current DOUBLE,
 	markets varchar(4096),
 
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
@@ -92,4 +93,29 @@ CREATE TABLE tradeCollab_deal_status (
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE tradeCollab_deals_completed (
+	deal_id MEDIUMINT,
+	team_id MEDIUMINT,
+	member_id MEDIUMINT,
+	member_email varchar(1024) NOT NULL,
+	stock_name varchar(1024) NOT NULL,
+	stock_price FLOAT,
+	stock_quant MEDIUMINT,
+	deal_nature varchar(128),
+	reason varchar(4096),
+	deal_end DATE,
+	deal_created DATETIME,
+	market varchar(1024),
 
+	CONSTRAINT `tradeCollab_deals_completed_ibfk_1`
+    FOREIGN KEY (`team_id`)
+    REFERENCES `tradeCollab_team` (`team_id`)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+
+    CONSTRAINT `tradeCollab_deals_completed_ibfk_2`
+    FOREIGN KEY (`member_id`)
+    REFERENCES `tradeCollab_members` (`member_id`)
+    ON DELETE CASCADE ON UPDATE CASCADE
+
+
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;

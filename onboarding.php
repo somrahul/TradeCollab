@@ -13,6 +13,7 @@ if(!isset($_SESSION['loggedIn'])) {
 		//var_dump($_POST);
 		$teamName = $_POST["teamName"];
 		//print $teamName;
+		$userEmail = $_SESSION['userEmail'];
 		
 		$memCount = $_POST["memberCount"];
 		for($i=1; $i<=$memCount; $i++){
@@ -41,12 +42,13 @@ if(!isset($_SESSION['loggedIn'])) {
 		$p = $CFG->dbprefix;
 
 		//saving the team table into the database
-		$sql = "INSERT INTO {$p}team (team_name, budget, markets) VALUES (:TN, :B, :M)";
+		$sql = "INSERT INTO {$p}team (team_name, budget, markets, budget_current) VALUES (:TN, :B, :M, :BC)";
 		$stmt = $db->prepare($sql);
 		$stmt->execute(array(
 			':TN' => $teamName,
 			':B' => $budget,
-			':M' => $market
+			':M' => $market,
+			':BC' => $budget
 			));
 		// print "Team created";
 
@@ -54,7 +56,7 @@ if(!isset($_SESSION['loggedIn'])) {
 		$sql = "SELECT team_id from {$p}team where team_name = '{$teamName}'";
 		$stmt = $db->query($sql);
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-		if ($row != null){
+		if (!empty($row)){
 			$team_id = $row['team_id'];
 			if(isset($_SESSION['userEmail'])) {
 				$userEmail = $_SESSION['userEmail'];
@@ -70,13 +72,32 @@ if(!isset($_SESSION['loggedIn'])) {
                 	':email' => ${'collabEmail'.$i},
                 	':id' => $team_id));
 			}	
-		} else {
-			echo "You are not logged in. Please follow the link";
-			echo("<a href='http://localhost:8888/tradeCollab/'>Log In</a>");
-		}
-		
+		} 
 
-	}	
+		//send the invide to the team members
+		for($i=1; $i<=$memCount; $i++){
+			$emailAddress = ${'collabEmail'.$i};
+			//print $emailAddress;
+			//print $userEmail;
+			$link = "www.cotr.someshrahul.com";
+			$to = $emailAddress;
+			$subject = "You've been chosen";
+			$message = "Welcome to Collaborative trading platform. Please follow the link: ".$link;
+			$from = $userEmail;
+			$headers = "From:" . $from;
+			mail($to,$subject,$message,$headers);
+			
+		}
+
+
+		$_SESSION['success'] = 'Your team members have been sent an invitation email';
+		header ('Location: home.php');
+
+	} else {
+		//all the entries in the table were not filled
+		$_SESSION['error'] = 'Please fill the fields. They all are Required';
+	}
+	
 
 }
 
@@ -128,6 +149,16 @@ if(!isset($_SESSION['loggedIn'])) {
       <div class="col-md-3">
       </div>
       <div class="col-md-9">
+      	<?php
+			if ( isset($_SESSION['error']) ) {
+			    echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+			    unset($_SESSION['error']);
+			}
+			if ( isset($_SESSION['success']) ) {
+			    echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
+			    unset($_SESSION['success']);
+			}
+		?>
         <form name="getstarted" id="getstarted" method="POST">
 			    <div class="row row-form">
 				<div class="col-md-4">TEAM NAME</div>

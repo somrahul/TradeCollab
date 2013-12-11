@@ -94,6 +94,8 @@ if(!isset($_SESSION['loggedIn'])) {
 		        print "Error!: " . $e->getMessage() . "</br>"; 
 		} 
 
+		$_SESSION['success'] = 'The deal has been created successfully';
+		header ('Location: home.php');
 
 	} else {
 		$_SESSION['error'] = 'Please fill the fields. They all are Required';
@@ -129,13 +131,13 @@ if(!isset($_SESSION['loggedIn'])) {
     <div class="navbar-inner">
       <div class="container">
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
-        <a href="#" class="navbar-brand">CoTr</a>
+        <a href="home.php" class="navbar-brand">CoTr</a>
         <div class="nav-collapse collapse in" id="nav-collapse-01">
                   <ul class="nav">
-                    <li class="active"><a href="#fakelink">Initiate Deal</a></li>
-                    <li class=""><a href="#fakelink">Active Deal</a></li>
-                    <li class=""><a href="#fakelink">Budget</a></li>
-                    <li class=""><a href="#fakelink">History</a></li>
+                    <li class="active"><a href="#">Initiate Deal</a></li>
+                    <li class=""><a href="activeDeals.php">Active Deal</a></li>
+                    <li class=""><a href="budget.php">Budget</a></li>
+                    <li class=""><a href="history.php">History</a></li>
 
                                       </ul> <!-- /nav -->
              <div class="navbar-search pull-right">

@@ -11,59 +11,36 @@ if(!isset($_SESSION['loggedIn'])) {
 } else {
 	$userEmail = $_SESSION['userEmail'];
 
-	//getting the deals that require the user action
+	//getting the deals created by this user and that require action by others
 	$p = $CFG->dbprefix;
 
-	$sql = "SELECT member_id, member_name FROM {$p}members WHERE member_email = '{$userEmail}'";
+	$sql = "SELECT member_id, team_id, member_name FROM {$p}members WHERE member_email = '{$userEmail}'";
 	$stmt = $db->query($sql);
 	$row = $stmt->fetch(PDO::FETCH_ASSOC);
 	$member_id = $row['member_id'];
 	$member_name = $row['member_name'];
+  $team_id = $row['team_id'];
 	//print $member_id;
 
-  //getting the deals that have been initiated by this person
-	$sql = "SELECT deal_id FROM {$p}deal WHERE member_id = {$member_id}";
-	$stmt = $db->query($sql);
+  //select the deals that were initiated by this member id
+
+
+	$sql = "SELECT {$p}deal.deal_id, COUNT( * ) 
+          FROM {$p}deal
+          LEFT JOIN {$p}deal_status ON {$p}deal.deal_id = {$p}deal_status.deal_id
+          WHERE {$p}deal.member_id =  '{$member_id}'
+          AND {$p}deal.team_id =  '{$team_id}'
+          AND member_status IS NULL
+          AND deal_end > NOW()
+          GROUP BY {$p}deal.deal_id";
+	
+  $stmt = $db->query($sql);
 	
 	$dealIds = array();
 	while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
 		//print $row['deal_id'];
 		$dealIds[] =  $row['deal_id'];
 	}
-
-  //for these deals check if they have been approved by each of the user
-  //go in the deal status table and see the deals with no null
-
-  //this is to store the deal ids of the deals that have been approved by all
-  $newDealIds = array();
-
-  if (count($dealIds) > 0){
-    for ($i = 0; $i < count($dealIds); $i++ ){
-      $countDeal = 0;
-      $dealId = $dealIds[$i];
-      $sql = "SELECT member_status FROM {$p}deal_status WHERE deal_id = {$dealId}";
-      $stmt = $db->query($sql);
-      while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-        //print $row['member_status']; 
-        if($row['member_status'] == null or $row['member_status'] == 'NO') {
-          //found a null or a no value hence this deal is discarded
-          //print "inside if";
-          $countDeal += 1;
-        }
-      }
-      if($countDeal == 0){
-        //that means all are YES
-        //adding this to the new deal array
-        $newDealIds[] = $dealId;
-      }
-
-    }
-
-    //print_r($newDealIds);
-    $dealIds = $newDealIds;
-
-  }
-  
 
 	
 ?> 
@@ -95,11 +72,11 @@ if(!isset($_SESSION['loggedIn'])) {
     <div class="navbar-inner">
       <div class="container">
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
-        <a href="#" class="navbar-brand">CoTr</a>
+        <a href="home.php" class="navbar-brand">CoTr</a>
         <div class="nav-collapse collapse in" id="nav-collapse-01">
                   <ul class="nav">
                     <li class=""><a href="initiate.php">Initiate Deal</a></li>
-                    <li class=""><a href="activeDeals.php">Active Deal</a></li>
+                    <li class="active"><a href="activeDeals.php">Active Deal</a></li>
                     <li class=""><a href="budget.php">Budget</a></li>
                     <li class=""><a href="history.php">History</a></li>
 
@@ -119,12 +96,12 @@ if(!isset($_SESSION['loggedIn'])) {
   <br>
   <div class="container">
   <ul class="nav nav-tabs">
-  <li>
-    <a href="home.php">Pending Approval</a>
+  <li class="active">
+    <a href="#">By Me</a>
   </li>
 
-  <li class="active">
-    <a href="#">Waiting Authorization</a>
+  <li>
+    <a href="activeDealsOthers.php">By Others</a>
   </li>
 </ul>
 </div>
@@ -133,23 +110,19 @@ if(!isset($_SESSION['loggedIn'])) {
 if(count($dealIds) <= 0){
 	//no deals found
 ?>
-<div style="color: green;">Sorry!! No deals to authorize yet!!.</div>
+<div style="color: green;">There are no active deals currently!!</div>
 <?php
 } else {
-
-  //checking if the date of the deals is valid or not
-
-
 	for ($i=0;$i<count($dealIds);$i++){
 		$dealId = $dealIds[$i];
 		$sql = "SELECT * FROM {$p}deal where deal_id = '{$dealId}' and deal_end > NOW()";
-    
+		
 
 		$stmt = $db->query($sql);
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!empty($row)) {
-      
+		if (!empty($row)) {
+
 		//print_r($row);
 		//getting the username of the person who created the deal
 		//getting the row id
@@ -190,7 +163,7 @@ if(count($dealIds) <= 0){
     </div>
    </div> 
    <div class="col-md-2">
-    <h6>Authorize</h6>
+    <h6>Approval</h6>
    </div>
    <div class="col-md-4">
     <h6>Comments</h6>
@@ -217,16 +190,28 @@ if(count($dealIds) <= 0){
       </div>
     </div>
    </div> 
-   <form id="<?php echo("responseForm".$row['deal_id']);?>" method="POST" action="completeDeal.php">
    <div class="col-md-2">
-   		<?php if($row['deal_nature'] == 'BUY') {?>
-        <button class="btn btn-sm" onclick="completeDeal(<?php echo($row['deal_id']);?>)">BUY</button>
-      <?php } else { ?>
-        <button class="btn btn-sm" onclick="completeDeal(<?php echo($row['deal_id']);?>)">SELL</button>
-      <?php }?>
+   		
+        <?php 
+        //based on the deal id get all the users and their status on this deal
+        $sql = "SELECT member_status, member_name from {$p}deal_status
+				LEFT JOIN {$p}members ON {$p}members.member_id = {$p}deal_status.member_id
+				WHERE deal_id = {$row_id}";
+		$stmt2 = $db->query($sql);
+		while ( $row2 = $stmt2->fetch(PDO::FETCH_ASSOC) ) {
+			
+				if($row2['member_status'] == null)
+					$row2['member_status'] = "Not Decided";
+        ?> 
+        <span><?php echo($row2['member_name']).": ";?></span>
+        <?php if($row2['member_status'] == 'YES') {?>
+        <span id="yes" class="glyphicon glyphicon-ok"></span><br><br>
+        <?php } else if ($row2['member_status'] == 'NO') { ?>
+        <span id="no" class="glyphicon glyphicon-remove"></span><br><br>
+        <?php } else { ?>
+        <span id="not_decided"><?php echo($row2['member_status']);?></span><br><br>
+      	<?php } } ?>
    </div>
-   <input type="hidden" value="<?php echo($row['deal_id']);?>" name="deal_id" id="deal_id">
- </form>
    <div class="col-md-4">
     <span id="username"><?php echo($deal_creator).": ";?></span><span><?php echo($row['reason']);?> </span>
    <!-- <form id="message_form"> -->
@@ -235,13 +220,13 @@ if(count($dealIds) <= 0){
     		<input type="hidden" value="<?php echo($member_id);?>" name="member_id" id="<?php echo($member_id);?>">
 		    <button style="margin-top: 5px; "   class="btn btn-sm" onclick="insertMessage(<?php echo($row['deal_id']);?>)">Reply</button>
 		    
-		    <p id="<?php echo("messages".$row['deal_id']);?>" style="font-size: 16px">
+		    <p id="<?php echo("messages".$row['deal_id']);?>" style="font-size: 16px; overflow: scroll; height: 100px;">
 		    <?php 
 		    //getting all the chats corresponding to the deal id
 		    $sql = "SELECT chat, member_name
 			FROM {$p}comments JOIN {$p}members 
 			ON {$p}comments.member_id = {$p}members.member_id 
-			WHERE deal_id = {$row['deal_id']} ORDER BY {$p}comments.chat_created DESC LIMIT 0,3";
+			WHERE deal_id = {$row['deal_id']} ORDER BY {$p}comments.chat_created DESC";
 
 			$stmt10 = $db->query($sql);
 
@@ -266,7 +251,7 @@ if(count($dealIds) <= 0){
 <?php
 }
 }
-	}
+}
 }
 
 ?>  
@@ -352,16 +337,7 @@ function insertMessage(dealID){
 	
 }
 
-function completeDeal(dealID){
-  console.log("inside the completeDeal");
-
-  var formID = "responseForm"+dealID;
-  console.log("Form id = ", formID);
-  //document.getElementByID(responseID).value = 'YES';
-  $("#"+formID).submit();
-
-}
-
+//getting the chats at the start of the page
 
 
 

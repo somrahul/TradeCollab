@@ -78,7 +78,7 @@ try {
             //print "HI Biatch!!"
             $_SESSION['loggedIn'] = $firstName;
             $_SESSION['userEmail'] = $userEmail;
-            
+
             header('Location: home.php');
             return; 
         }
@@ -123,7 +123,7 @@ try {
     <div class="navbar-inner">
       <div class="container">
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
-        <a href="#" class="navbar-brand">CoTr</a>
+        <a href="index.php" class="navbar-brand">CoTr</a>
           <form class="navbar-search pull-right" action="?login" method="post">
               <div class="input-group input-group-sm">
                   <button class="btn btn-embossed btn-primary">
