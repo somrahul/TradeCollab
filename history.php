@@ -22,7 +22,7 @@ if(!isset($_SESSION['loggedIn'])) {
 	//print $member_id;
 
   //getting the deals that have been initiated by this person
-	$sql = "SELECT deal_id FROM {$p}deal WHERE member_id = {$member_id}";
+	$sql = "SELECT deal_id FROM {$p}deals_completed ";
 	$stmt = $db->query($sql);
 	
 	$dealIds = array();
@@ -30,41 +30,6 @@ if(!isset($_SESSION['loggedIn'])) {
 		//print $row['deal_id'];
 		$dealIds[] =  $row['deal_id'];
 	}
-
-  //for these deals check if they have been approved by each of the user
-  //go in the deal status table and see the deals with no null
-
-  //this is to store the deal ids of the deals that have been approved by all
-  $newDealIds = array();
-
-  if (count($dealIds) > 0){
-    for ($i = 0; $i < count($dealIds); $i++ ){
-      $countDeal = 0;
-      $dealId = $dealIds[$i];
-      $sql = "SELECT member_status FROM {$p}deal_status WHERE deal_id = {$dealId}";
-      $stmt = $db->query($sql);
-      while( $row = $stmt->fetch(PDO::FETCH_ASSOC) ) {
-        //print $row['member_status']; 
-        if($row['member_status'] == null or $row['member_status'] == 'NO') {
-          //found a null or a no value hence this deal is discarded
-          //print "inside if";
-          $countDeal += 1;
-        }
-      }
-      if($countDeal == 0){
-        //that means all are YES
-        //adding this to the new deal array
-        $newDealIds[] = $dealId;
-      }
-
-    }
-
-    //print_r($newDealIds);
-    $dealIds = $newDealIds;
-
-  }
-  
-
 	
 ?> 
 
@@ -101,7 +66,7 @@ if(!isset($_SESSION['loggedIn'])) {
                     <li class=""><a href="initiate.php">Initiate Deal</a></li>
                     <li class=""><a href="activeDeals.php">Active Deal</a></li>
                     <li class=""><a href="budget.php">Budget</a></li>
-                    <li class=""><a href="history.php">History</a></li>
+                    <li class="active"><a href="history.php">History</a></li>
 
                                       </ul> <!-- /nav -->
           <div class="navbar-search pull-right">
@@ -119,12 +84,12 @@ if(!isset($_SESSION['loggedIn'])) {
   <br>
   <div class="container">
   <ul class="nav nav-tabs">
-  <li>
-    <a href="home.php">Pending Approval</a>
+  <li class="active">
+    <a href="#">Successful Deals</a>
   </li>
 
-  <li class="active">
-    <a href="#">Waiting Authorization</a>
+  <li>
+    <a href="historyFailed.php">Failed Deals</a>
   </li>
 </ul>
 </div>
@@ -133,7 +98,7 @@ if(!isset($_SESSION['loggedIn'])) {
 if(count($dealIds) <= 0){
 	//no deals found
 ?>
-<div style="color: green;">Sorry!! No deals to authorize yet!!.</div>
+<div style="color: red;">Sorry!! No succcessful deals yet!!.</div>
 <?php
 } else {
 
@@ -142,7 +107,7 @@ if(count($dealIds) <= 0){
 
 	for ($i=0;$i<count($dealIds);$i++){
 		$dealId = $dealIds[$i];
-		$sql = "SELECT * FROM {$p}deal where deal_id = '{$dealId}' and deal_end > NOW()";
+		$sql = "SELECT * FROM {$p}deals_completed where deal_id = '{$dealId}'";
     
 
 		$stmt = $db->query($sql);
@@ -190,7 +155,7 @@ if(count($dealIds) <= 0){
     </div>
    </div> 
    <div class="col-md-2">
-    <h6>Authorize</h6>
+    <h6>Status</h6>
    </div>
    <div class="col-md-4">
     <h6>Comments</h6>
@@ -220,9 +185,9 @@ if(count($dealIds) <= 0){
    <form id="<?php echo("responseForm".$row['deal_id']);?>" method="POST" action="completeDeal.php">
    <div class="col-md-2">
    		<?php if($row['deal_nature'] == 'BUY') {?>
-        <button class="btn btn-sm" onclick="completeDeal(<?php echo($row['deal_id']);?>)">BUY</button>
+        <span>BOUGHT</span>
       <?php } else { ?>
-        <button class="btn btn-sm" onclick="completeDeal(<?php echo($row['deal_id']);?>)">SELL</button>
+        <span>SOLD</span>
       <?php }?>
    </div>
    <input type="hidden" value="<?php echo($row['deal_id']);?>" name="deal_id" id="deal_id">
@@ -237,7 +202,7 @@ if(count($dealIds) <= 0){
     		<input type="hidden" value="<?php echo($member_id);?>" name="member_id" id="<?php echo($member_id);?>">
 		    <button style="margin-top: 5px; "   class="btn btn-sm" onclick="insertMessage(<?php echo($row['deal_id']);?>)">Reply</button>
 		    
-		    <p id="<?php echo("messages".$row['deal_id']);?>" style="font-size: 16px">
+		    <p id="<?php echo("messages".$row['deal_id']);?>" style="font-size: 16px; overflow: scroll; height: 100px;">
 		    <?php 
 		    //getting all the chats corresponding to the deal id
 		    $sql = "SELECT chat, member_name

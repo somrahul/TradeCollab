@@ -89,12 +89,35 @@ border-bottom-color: #414042;}
   margin-top: 20px;
   margin-bottom:20px;}
 
-#yes{color:green;}
+#yes:hover{color:green;}
 
-#no{color:red;}
+#no:hover{color:red;}
 
-#decide_yes:hover{color:green; cursor: hand;}
+.headtitle{ font-size: :250%;
+  color:#9B8579;
+border-bottom-width:1px;
+border-bottom-color: #cccccc;
+border-bottom-style: solid;}
 
-#decide_no:hover{color:red; cursor: hand;}
+.data{line-height: 26px;}
+
+#broker{border-top-width:3px;
+border-top-color: orange;
+border-top-style: solid;}
+
+#message{border-top-width:3px;
+border-top-color: red;
+border-top-style: solid;}
+
+#team{border-top-width:3px;
+border-top-color: blue;
+border-top-style: solid;}
 
 
+#news{border-top-width:3px;
+border-top-color: green;
+border-top-style: solid;}
+
+#company{border-top-width:3px;
+border-top-color: violet;
+border-top-style: solid;}

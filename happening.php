@@ -132,7 +132,7 @@ try {
         <a href="index.php" class="navbar-brand">CoTr</a>
         <div class="nav-collapse collapse in" id="nav-collapse-01">
                 <ul class="nav">
-                    <li class=""><a href="happening.php">Sneak Peak Inside</a></li>
+                    <li class="active"><a href="happening.php">Sneak Peak Inside</a></li>
                 </ul>
         </div>
           <form class="navbar-search pull-right" action="?login" method="post">
@@ -146,23 +146,69 @@ try {
       </div>
     </div>
   </div>
-  <div class="container">
+ <div class="container">
+     <div class="row">
       <div class="col-md-3">
+        <div id="broker" class="well">
+          <div class="headtitle">TOP BROKERS</div>
+          <div class="data">#1 Sachin Tendulkar<br>
+          #2 Madhuri Dixit<br>
+          #3 Karan Arjun<br>
+          #4 Salman Khan<br>
+          #5 Aamir Khan</div>
+        </div>
       </div>
+      <div class="col-md-3">
+        <div id="team" class="well">
+          <div class="headtitle">TOP TEAMS</div>
+          <div class="data">#1 Mumbai Indians<br>
+          #2 Rajasthan Royals<br>
+          #3 Kings 11 Punjab<br>
+          #4 Chennai Super Kings<br>
+          #5 Bangalore Royal Challengers</div>
+        </div>
+      </div>
+  
       <div class="col-md-6">
-    <div class="abtcotr">
-      <div class="cotrimg">
-      <img src="http://placehold.it/200x200">
+        <div id="message" class="well">
+          <div class="headtitle">SEEKING TEAM MEMBERS</div>
+          <div class="data">#1 Team KKR needs one member, specializing in IT<br>
+          #2 Team MI needs two members, specializing in Rail Roads<br>
+          #3 Team CSK needs three members, specializing in Textile<br>
+          #4 Team RR needs one member, specializing in IT<br>
+          #5 Team RCB needs one member, specializing in Power</div>
+        </div>
       </div>
-      <div id="cotrdesc">
-        Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.
+     </div></div>
+     <div class="container">
+     <div class="row">
+      <div class="col-md-8">
+      <div id="news" class="well">
+          <div class="headtitle">NEWS</div>
+          <div class="data">#1 The Disastrous Rollout Of Obamacare Just Saved The Economy<br>
+          #2 Fox News Reporter Scores A Victory For Every Journalist In America<br>
+          #3 Here's Paul Krugman's Plan To Grow The Economy Without Bubbles<br>
+          #4 Here Are Stanford's Billion-Dollar Fraternities And Dorms, Where Famous Tech Founders Started Out<br>
+          #5 A US Spy Agency Came Up With The Worst Possible Logo — And Jon Stewart Ripped It To Shreds</div>
+        </div>
+      </div>
+      <div class="col-md-4">
+      <div id="company" class="well">
+          <div class="headtitle">HOT COMPANIES</div>
+          <div class="data">#1 Google<br>
+          #2 Reliance<br>
+          #3 Apple<br>
+          #4 PepsiCo<br>
+          #5 United Breweries</div>
+        </div>
       </div>
     </div>
-    
 </div>
+     </div>
 </div>
-</div>
-    <!-- /.container -->
+</div>    <!-- /.container -->
+
+
 
 
     <!-- Load JS here for greater good =============================-->
