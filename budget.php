@@ -62,7 +62,6 @@ if(!isset($_SESSION['loggedIn'])) {
         svg {
             width: 600px;
             height: 450px;
-            border: solid 1px #ccc;
             font: 10px sans-serif;
             margin-left: 200px;
             text-align: center;
@@ -100,6 +99,16 @@ if(!isset($_SESSION['loggedIn'])) {
 </div>
   <br>
   <div class="container">
+    <?php 
+
+          echo '<p style="color:blue">'."Total Budget = $".$budget."</p>\n";
+     
+          echo '<p style="color:green">'."Amount Invested = $".($budget - $budget_current)."</p>\n";
+
+          echo '<p style="color:red">'."Amount Left = $".$budget_current."</p>\n";
+          
+          
+    ?>
     <div id="barChart" style="margin-left: 100px;">
     <script type="text/javascript">
  
@@ -142,7 +151,9 @@ if(!isset($_SESSION['loggedIn'])) {
                 d.outerRadius = r;
                 return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
             })
-            .attr("text-anchor", "middle")                          //center the text on it's origin
+            .attr("text-anchor", "middle") 
+            .attr("fill", "white")
+            .attr("font-size","12px")                       //center the text on it's origin
             .text(function(d, i) { return data[i].label; });        //get the label from our original data array
         
     </script>

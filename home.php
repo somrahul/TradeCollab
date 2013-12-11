@@ -96,6 +96,14 @@ if(!isset($_SESSION['loggedIn'])) {
 //getting the data from the database corresponding to the deal ids and displaying it here
 if(count($dealIds) <= 0){
 	//no deals found
+	if ( isset($_SESSION['error']) ) {
+	    echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+	    unset($_SESSION['error']);
+	}
+	if ( isset($_SESSION['successful']) ) {
+	    echo '<p style="color:green">'.$_SESSION['successful']."</p>\n";
+	    unset($_SESSION['successful']);
+	}
 ?>
 
 <div style="color: green;">You're awesome!! NO deals are pending your approval.<br><a href="initiate.php">Create a Deal</a></div>
@@ -195,6 +203,9 @@ if(count($dealIds) <= 0){
 		$stmt2 = $db->query($sql);
 		while ( $row2 = $stmt2->fetch(PDO::FETCH_ASSOC) ) {
 			if($row2['member_name'] != $member_name) {
+				 if($row2['member_name'] == null)
+          			$row2['member_name'] = "Collaborator";
+          		
 				if($row2['member_status'] == null)
 					$row2['member_status'] = "Not Decided";
         ?> 

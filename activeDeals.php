@@ -200,7 +200,10 @@ if(count($dealIds) <= 0){
 				WHERE deal_id = {$row_id}";
 		$stmt2 = $db->query($sql);
 		while ( $row2 = $stmt2->fetch(PDO::FETCH_ASSOC) ) {
-			
+			   
+        if($row2['member_name'] == null)
+          $row2['member_name'] = "Collaborator";
+
 				if($row2['member_status'] == null)
 					$row2['member_status'] = "Not Decided";
         ?> 

@@ -297,6 +297,7 @@ function insertMessage(dealID){
 	console.log("inside the insert message");
 	var chat = $("#chat"+dealID).val();
 	console.log("chat = " + chat);
+  console.log("deal id = " + dealID)
 	//making the request to store the chat in the database
 	var ajaxCall = $.ajax({
 		type: "POST",
