@@ -14,15 +14,16 @@ if(!isset($_SESSION['loggedIn'])) {
 	//getting the deals that require the user action
 	$p = $CFG->dbprefix;
 
-	$sql = "SELECT member_id, member_name FROM {$p}members WHERE member_email = '{$userEmail}'";
+	$sql = "SELECT member_id, team_id, member_name FROM {$p}members WHERE member_email = '{$userEmail}'";
 	$stmt = $db->query($sql);
 	$row = $stmt->fetch(PDO::FETCH_ASSOC);
 	$member_id = $row['member_id'];
 	$member_name = $row['member_name'];
+  $team_id = $row['team_id'];
 	//print $member_id;
 
   //getting the deals that have been initiated by this person
-	$sql = "SELECT deal_id FROM {$p}deal WHERE deal_end < NOW()";
+	$sql = "SELECT deal_id FROM {$p}deal WHERE deal_end < NOW() AND team_id = {$team_id}";
 	$stmt = $db->query($sql);
 	
 	$dealIds = array();
@@ -98,7 +99,7 @@ if(!isset($_SESSION['loggedIn'])) {
 if(count($dealIds) <= 0){
 	//no deals found
 ?>
-<div style="color: red;">Sorry!! No succcessful deals yet!!.</div>
+<div style="color: green;">Hurray!! No failed Deals.</div>
 <?php
 } else {
 

@@ -29,7 +29,6 @@ if(!isset($_SESSION['loggedIn'])) {
 		//print $row['deal_id'];
 		$dealIds[] =  $row['deal_id'];
 	}
-
 	
 ?> 
 
@@ -98,9 +97,20 @@ if(!isset($_SESSION['loggedIn'])) {
 if(count($dealIds) <= 0){
 	//no deals found
 ?>
-<div style="color: green;">You're awesome!! NO deals are pending your approval.</div>
+
+<div style="color: green;">You're awesome!! NO deals are pending your approval.<br><a href="initiate.php">Create a Deal</a></div>
 <?php
 } else {
+	
+	if ( isset($_SESSION['error']) ) {
+	    echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
+	    unset($_SESSION['error']);
+	}
+	if ( isset($_SESSION['successful']) ) {
+	    echo '<p style="color:green">'.$_SESSION['successful']."</p>\n";
+	    unset($_SESSION['successful']);
+	}
+
 	for ($i=0;$i<count($dealIds);$i++){
 		$dealId = $dealIds[$i];
 		$sql = "SELECT * FROM {$p}deal where deal_id = '{$dealId}' and deal_end > NOW()";
@@ -122,16 +132,6 @@ if(count($dealIds) <= 0){
 		$deal_creator = $row1['member_name'];
 ?>
     <div class="container" >
-    	<?php
-			if ( isset($_SESSION['error']) ) {
-			    echo '<p style="color:red">'.$_SESSION['error']."</p>\n";
-			    unset($_SESSION['error']);
-			}
-			if ( isset($_SESSION['success']) ) {
-			    echo '<p style="color:green">'.$_SESSION['success']."</p>\n";
-			    unset($_SESSION['success']);
-			}
-		?>
       <div class="row" id="tablehead">
    <div class="col-md-2" >
     <h6>Deal Info</h6>

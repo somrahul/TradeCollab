@@ -110,6 +110,7 @@ if(!isset($_SESSION['loggedIn'])) {
 if(count($dealIds) <= 0){
 	//no deals found
 ?>
+
 <div style="color: green;">There are no active deals currently!!</div>
 <?php
 } else {

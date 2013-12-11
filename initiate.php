@@ -94,7 +94,7 @@ if(!isset($_SESSION['loggedIn'])) {
 		        print "Error!: " . $e->getMessage() . "</br>"; 
 		} 
 
-		$_SESSION['success'] = 'The deal has been created successfully';
+		$_SESSION['successful'] = 'The deal has been created successfully. View it under Active Deals';
 		header ('Location: home.php');
 
 	} else {

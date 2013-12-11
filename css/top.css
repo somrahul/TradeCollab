@@ -89,9 +89,11 @@ border-bottom-color: #414042;}
   margin-top: 20px;
   margin-bottom:20px;}
 
-#yes:hover{color:green;}
+#yes{color:green;}
+#no{color:red;}
 
-#no:hover{color:red;}
+#decide_yes:hover{color:green; cursor: hand;}
+#decide_no:hover{color:red; cursor: hand;}
 
 .headtitle{ font-size: :250%;
   color:#9B8579;
