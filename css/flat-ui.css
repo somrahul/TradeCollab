@@ -2496,7 +2496,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   color: #ffffff;
 }
 .progress {
-  background: #ebedef;
+  background: #C2B59B;
   border-radius: 32px;
   height: 12px;
   -webkit-box-shadow: none;
@@ -2504,7 +2504,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   box-shadow: none;
 }
 .progress-bar {
-  background: #1abc9c;
+  background: #414042;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;

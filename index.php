@@ -10,7 +10,7 @@ try {
     if(!$openid->mode) {
         if(isset($_GET['login'])) {
             $openid->identity = 'https://www.google.com/accounts/o8/id';
-            $openid->required = array('contact/email', 'namePerson/first', 'namePerson/last');
+            $openid->required = array('contact/email', 'namePerson/first', 'namePerson/last', 'photo');
             $openid->optional = array('namePerson/friendly');
             header('Location: ' . $openid->authUrl());
         }
@@ -28,7 +28,11 @@ try {
         $identity = $openid->identity;
         $userAttributes = $openid->getAttributes();
   //       echo("\n<pre>\nAttributes:\n");
-		// print_r($userAttributes);
+		    //print_r($userAttributes);
+        // $encodedPhoto = $userAttributes['eid/photo'];
+        // $photo = base64url_decode($encodedPhoto);
+        // $_SESSION['photo'] = $photo;
+        // echo '<img src="photo.php"/>';
 		// echo("\n</pre>\n");
         $firstName = isset($userAttributes['namePerson/first']) ? $userAttributes['namePerson/first'] : false;
         $lastName = isset($userAttributes['namePerson/last']) ? $userAttributes['namePerson/last'] : false;
@@ -44,16 +48,18 @@ try {
         if ($row == null){
             //echo "inside if";
             //writing the query to enter the user email and password
-            $sql = "INSERT into {$p}members (member_email, member_name) VALUES (:email, :name)";
+            $sql = "INSERT into {$p}members (member_email, member_name, member_last_name, member_since) VALUES (:email, :name, :lname, NOW())";
             //echo $sql;
             $stmt = $db->prepare($sql);
             $stmt->execute(array(
                 ':email' => $userEmail,
-                ':name' => $firstName));
+                ':name' => $firstName,
+                ':lname' => $lastName));
 
             //header based on the new user
             $_SESSION['loggedIn'] = $firstName;
             $_SESSION['userEmail'] = $userEmail;
+
             
             header('Location: onboarding.php');
             return; 
@@ -61,19 +67,12 @@ try {
         } else if ($row['member_name'] == null){
             //the user is a collaborator
             //insert the name and direct to the home page
-            $sql = "UPDATE {$p}members SET member_name = :name WHERE member_email = :email";
-            //echo $sql;
-            $stmt = $db->prepare($sql);
-            //$stmt->execute();
-            $stmt->execute(array(
-                ':name' => $firstName,
-                ':email' => $userEmail));
-            //take to the home
-            //$_SESSION['userEmail'] = 'You Collab Bitch';
+            
             $_SESSION['loggedIn'] = $firstName;
             $_SESSION['userEmail'] = $userEmail;
+            $_SESSION['lname'] = $lastName;
 
-            header('Location: home.php');
+            header('Location: receiveCollab.php');
             return; 
 
         } else{
@@ -131,9 +130,9 @@ try {
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
         <a href="index.php" class="navbar-brand">CoTr</a>
         <div class="nav-collapse collapse in" id="nav-collapse-01">
-                <ul class="nav">
+                <!-- <ul class="nav">
                     <li class=""><a href="happening.php">Sneak Peak Inside</a></li>
-                </ul>
+                </ul> -->
         </div>
           <form class="navbar-search pull-right" action="?login" method="post">
               <div class="input-group input-group-sm">

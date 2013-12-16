@@ -85,6 +85,11 @@ if(!isset($_SESSION['loggedIn'])) {
                     <li class=""><a href="history.php">History</a></li>
 
                                       </ul> <!-- /nav -->
+                  <ul class="nav" style="padding-left: 180px;">
+                    <li class=""><a href="explore.php">Explore</a></li>
+                    <li class=""><a href="team.php">My Team</a></li>
+                    <li class=""><a href="profile.php">My Profile</a></li>
+                  </ul> <!-- /nav -->
           <div class="navbar-search pull-right">
               <div class="input-group input-group-sm">
                   <a href="logout.php"><button class="btn btn-embossed btn-primary">

@@ -123,3 +123,40 @@ border-top-style: solid;}
 #company{border-top-width:3px;
 border-top-color: violet;
 border-top-style: solid;}
+
+#topname{
+border-bottom-color: #cccccc;
+border-bottom-style: solid;
+border-bottom-width: 1px;
+margin-top: -10px;
+margin-bottom:10px;}
+
+#colpad{padding:0px;
+border-right-color: #cccccc;
+border-right-style: solid;
+border-right-width: 1px;
+height:900px;}
+
+#badges{margin:5px;}
+
+#caption{font-size: 9px;
+text-align: center;}
+
+.detail{ border-bottom-color: #cccccc;
+border-bottom-style: solid;
+border-bottom-width: 1px;
+ padding:10px;}
+
+#pencil:hover{cursor: hand;}
+
+#rightbutton{margin-top:10px;
+  margin-bottom:20px;
+float:right;
+ma}
+ #rightbutton1{margin-top:10px;
+  margin-bottom:20px;
+float:right;
+display:inline;
+margin-right: 5px;}
+
+

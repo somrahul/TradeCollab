@@ -1,24 +1,33 @@
 drop table if exists tradeCollab_members;
 
+CREATE TABLE tradeCollab_team (
+	team_id MEDIUMINT NOT NULL AUTO_INCREMENT KEY,
+	team_name varchar(1024) NOT NULL,
+	ideology varchar(4096),
+	contract varchar(8192),
+	contract_duration MEDIUMINT,
+	team_since DATETIME,
+	budget DOUBLE,
+	budget_current DOUBLE,
+	markets varchar(4096)
+
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE tradeCollab_members (
 	member_id MEDIUMINT NOT NULL AUTO_INCREMENT KEY,
 	member_email varchar(128) NOT NULL,
-	member_name varchar(1024) NOT NULL,
+	member_name varchar(1024),
+	member_last_name varchar(1024),
+	member_bio varchar(4096),
+	member_skills varchar(4096),
+	member_since DATETIME,
+	deals_initiated MEDIUMINT,
 	team_id MEDIUMINT,
 
 	CONSTRAINT `tradeCollab_members_ibfk_1`
     FOREIGN KEY (`team_id`)
     REFERENCES `tradeCollab_team` (`team_id`)
     ON DELETE CASCADE ON UPDATE CASCADE
-
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE tradeCollab_team (
-	team_id MEDIUMINT NOT NULL AUTO_INCREMENT KEY,
-	team_name varchar(1024) NOT NULL
-	budget DOUBLE,
-	budget_current DOUBLE,
-	markets varchar(4096),
 
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
@@ -117,5 +126,41 @@ CREATE TABLE tradeCollab_deals_completed (
     REFERENCES `tradeCollab_members` (`member_id`)
     ON DELETE CASCADE ON UPDATE CASCADE
 
+
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE tradeCollab_recommendations (
+	recommendation_id MEDIUMINT NOT NULL AUTO_INCREMENT KEY,
+	member_id MEDIUMINT,
+	recommender_id MEDIUMINT,
+	recommendation varchar(8192),
+
+	CONSTRAINT `tradeCollab_recommendations_ibfk_1`
+    FOREIGN KEY (`member_id`)
+    REFERENCES `tradeCollab_members` (`member_id`)
+    ON DELETE CASCADE ON UPDATE CASCADE,	
+
+    CONSTRAINT `tradeCollab_recommendations_ibfk_2`
+    FOREIGN KEY (`recommender_id`)
+    REFERENCES `tradeCollab_members` (`member_id`)
+    ON DELETE CASCADE ON UPDATE CASCADE
+
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE tradeCollab_team_recommendations (
+	recommendation_id MEDIUMINT NOT NULL AUTO_INCREMENT KEY,
+	team_id MEDIUMINT,
+	recommender_id MEDIUMINT,
+	recommendation varchar(8192),
+
+	CONSTRAINT `tradeCollab_team_recommendations_ibfk_1`
+    FOREIGN KEY (`team_id`)
+    REFERENCES `tradeCollab_team` (`team_id`)
+    ON DELETE CASCADE ON UPDATE CASCADE,	
+
+    CONSTRAINT `tradeCollab_team_recommendations_ibfk_2`
+    FOREIGN KEY (`recommender_id`)
+    REFERENCES `tradeCollab_members` (`member_id`)
+    ON DELETE CASCADE ON UPDATE CASCADE
 
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;

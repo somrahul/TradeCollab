@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Flat UI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="css/flat-ui.css" rel="stylesheet">
+    <link href="css/top.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+<div class="container">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target="#nav-collapse-01"></button>
+        <a href="#" class="navbar-brand">CoTr</a>
+          <form class="navbar-search pull-right" action="">
+              <div class="input-group input-group-sm">
+                  <button class="btn btn-embossed btn-primary">
+                    Logout
+                  </button>
+             
+              </div>
+          </form>
+      </div>
+    </div>
+  </div><div class="container">
+  <h3 id="heading">Welcome Collaborator</h3><hr>
+  <h5 class="detail">Team Name</h5>
+  <div class="detail"><h6>Team Ideology</h6><p>The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.</p></div>
+  
+  <div class="detail"><h6>Team Budget</h6><p>$10000(USD)</p></div>
+
+  <h6>Deal Acceptance Ratio</h6>
+      <p>Total Deals: 890</p>
+      <div class="detail"><div class="progress">
+  <div class="progress-bar progress-bar-primary" style="width: 80%;">80%</div>
+  </div>
+</div>
+
+<div class="detail"><h6>Contract</h6><div class="well"><p class="lead">Term: 1 year</p><p>The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.</p></div></div>
+
+
+<button id="rightbutton" class="btn btn-primary btn-wide">Accept</button><button id="rightbutton1" class="btn btn-default btn-wide">Decline</button>
+
+</div></div>
+    <!-- /.container -->
+
+
+    <!-- Load JS here for greater good =============================-->
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-select.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
+    <script src="js/flatui-checkbox.js"></script>
+    <script src="js/flatui-radio.js"></script>
+    <script src="js/jquery.tagsinput.js"></script>
+    <script src="js/jquery.placeholder.js"></script>
+    <script type="text/javascript">
+$(function() {
+var addDiv = $('#addinput');
+var i = $('#addinput span').size() + 1;
+
+$('#addNew').live('click', function() {
+$('<span id="addmbr"><input type="email" id="p_new" name="p_new_' + i +'" value="" placeholder="xyz@abc.com" />&nbsp;<a href="#" id="remNew">Remove</a> </span>').appendTo(addDiv);
+i++;
+
+return false;
+});
+
+$('#remNew').live('click', function() {
+if( i > 2 ) {
+$(this).parents('span').remove();
+i--;
+}
+return false;
+});
+});
+
+</script>
+  </body>
+</html>

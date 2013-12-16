@@ -9,7 +9,7 @@ if(!isset($_SESSION['loggedIn'])) {
 	echo("<a href='http://localhost:8888/tradeCollab/'>Log In</a>");
 	return;
 } else {
-	if(isset($_POST["teamName"])&&isset($_POST["memberCount"])&&isset($_POST["budget"])) {
+	if(isset($_POST["teamName"])&&isset($_POST["memberCount"])&&isset($_POST["budget"])&&isset($_POST["contract"])&&isset($_POST["ideology"])&&isset($_POST["duration"])) {
 		//var_dump($_POST);
 		$teamName = $_POST["teamName"];
 		//print $teamName;
@@ -25,6 +25,12 @@ if(!isset($_SESSION['loggedIn'])) {
 
 		$budget = $_POST["budget"];
 		//print $budget;
+
+		$ideology = $_POST["ideology"];
+
+		$contract = $_POST["contract"];
+
+		$duration = $_POST["duration"];
 
 		$market = "";
 
@@ -42,13 +48,16 @@ if(!isset($_SESSION['loggedIn'])) {
 		$p = $CFG->dbprefix;
 
 		//saving the team table into the database
-		$sql = "INSERT INTO {$p}team (team_name, budget, markets, budget_current) VALUES (:TN, :B, :M, :BC)";
+		$sql = "INSERT INTO {$p}team (team_name, budget, markets, budget_current, team_since, ideology, contract, contract_duration) VALUES (:TN, :B, :M, :BC, NOW(), :ID, :CON, :DUR)";
 		$stmt = $db->prepare($sql);
 		$stmt->execute(array(
 			':TN' => $teamName,
 			':B' => $budget,
 			':M' => $market,
-			':BC' => $budget
+			':BC' => $budget,
+			':ID' => $ideology,
+			':CON' => $contract,
+			':DUR' => $duration
 			));
 		// print "Team created";
 
@@ -191,13 +200,33 @@ if(!isset($_SESSION['loggedIn'])) {
 			  <input type="checkbox" value="Shanghai Stock Exchange" name="check3" id="checkbox2" data-toggle="checkbox">
 			  Shanghai Stock Exchange
 			</label></div>
-			  </div>
+			</div>
+			<div class="row row-form">
+			<div class="col-md-4" style="margin-bottom: 20px;">TEAM IDEOLOGY</div>
+			<div class="col-md-5">
+				<textarea row="8" cols="50" class="form" id="ideology" placeholder="Please enter your team's ideology" name="ideology"></textarea>
+			</div>
+			</div>
+			<div class="row row-form">
+			<div class="col-md-4">TEAM CONTRACT</div>
+			<div class="col-md-5">
+				<textarea row="8" cols="50" class="form" id="contract" placeholder="Please enter your team's contract" name="contract"></textarea>
+			</div>
+			</div>
+
+			<div class="row row-form">
+				<div class="col-md-4">CONTRACT DURATION</div>
+				<div class="col-md-5"><input type="text" name="duration" value="" placeholder="number of years"  ></div>
+			</div>
+
 			  <div class="row row-form">
 			<div class="col-md-9" id="submit"><button class="btn btn-default btn-wide">Clear</button>&nbsp;<button class="btn btn-primary btn-wide">Submit</button></div>
 			  </div> 
 			  <input type="hidden" name="memberCount" id="mcount" value="">
+
+
 		</form>
-</div>
+
 </div>
 </div>
     <!-- /.container -->
